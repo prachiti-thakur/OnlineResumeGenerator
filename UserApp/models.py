@@ -5,6 +5,7 @@ class User_Info(models.Model):
     username = models.CharField(max_length=20,primary_key=True)
     password = models.CharField(max_length=20)
     
+    
     class Meta:
         db_table = "userInfo"
         
@@ -24,7 +25,14 @@ class personal_info(models.Model):
     class Meta:
         db_table="personal_info"
     
-
+class my_resumes(models.Model):
+    user = models.ForeignKey(User_Info, on_delete=models.CASCADE)
+    person_info = models.ForeignKey(personal_info, on_delete=models.CASCADE)
+    
+    
+    class Meta:
+        db_table="my_resumes"
+    
 class educational_details(models.Model):
     nameOfExamination = models.CharField(max_length=50)
     institute=models.CharField(max_length=500)
@@ -38,7 +46,7 @@ class educational_details(models.Model):
     
 class certification(models.Model):
     certification=models.CharField(max_length=100)
-    perIn_id = models.ForeignKey(personal_info,on_delete=models.CASCADE)
+    perIn_id= models.ForeignKey(personal_info,on_delete=models.CASCADE)
 
     class Meta:
         db_table="certification"
@@ -55,7 +63,7 @@ class academic_project(models.Model):
     project_name= models.CharField(max_length=100)
     technologies_used=models.CharField(max_length=200)
     description=models.TextField(max_length=1000)
-    perIn_id = models.ForeignKey(personal_info,on_delete=models.CASCADE)
+    perIn_id= models.ForeignKey(personal_info,on_delete=models.CASCADE)
     
     class Meta:
         db_table="academic_project"

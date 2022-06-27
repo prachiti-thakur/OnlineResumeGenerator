@@ -1,9 +1,11 @@
+from turtle import bye
 from django.shortcuts import redirect, render,HttpResponse
 
-from UserApp.models import User_Info,personal_info,educational_details
+from UserApp.models import User_Info,personal_info,educational_details,certification,technical_skills,academic_project
 
 # Create your views here.
 def home(request):
+    
     return render(request,"home.html")
 
 def signup(request):
@@ -20,6 +22,7 @@ def signup(request):
     
 def login(request):
     if(request.method == "GET"):
+        request.session.clear()
         return render(request,"login.html",{})
     else:
         uname=request.POST["Username"]
@@ -28,10 +31,10 @@ def login(request):
             u1=User_Info.objects.get(username=uname,password=pwd)
             #create a session
             request.session["uname"]=uname
-            return HttpResponse("successfully login")
+            #return HttpResponse("successfully login")
         except:
-            #pass
-            return HttpResponse("login fail")
+            pass
+            #return HttpResponse("login fail")
         
         return redirect(home)
             
@@ -42,7 +45,10 @@ def logout(request):
 
 def personal_information(request):
     if(request.method == "GET"):
-        return render(request,"personal_info.html",{})
+        if("uname" in request.session):
+            return render(request,"personal_info.html",{})
+        else:
+            return redirect(login)
     
     else:
         p1=personal_info()
@@ -74,12 +80,8 @@ def personal_information(request):
         p1.save()
 
         #return redirect(fields)
-        print (p1.id)
-    
         return render(request, 'fields.html',{"Pers":p1.id})
-    print (p1.id)
     
-   
    #testing purpose   
    
 def educational_Details(request,Pers):
@@ -100,7 +102,50 @@ def educational_Details(request,Pers):
         return render(request,"fields.html",{"Pers":Pers})
     
         
-              
+def Certification(request,Pers):
+    if (request.method =="GET"):
+        return render(request,"certification.html",{})  
+    else:
+        
+        c1=certification()
+        
+        c1.certification=request.POST['certification']
+        c1.perIn_id=personal_info.objects.get(id=Pers)
+        
+        c1.save()
+         
+        return render(request,"fields.html",{"Pers":Pers})     
         
         
+def Technical_Skills(request,Pers):
+    if (request.method =="GET"):
+        return render(request,"Technical_Skills.html",{})
+    else:
         
+        t1=technical_skills()
+        
+        t1.skills=request.POST['skills']
+        t1.perIn_id=personal_info.objects.get(id=Pers)
+        
+        t1.save()
+        
+        return render(request,"fields.html",{"Pers":Pers})
+        
+               
+def Academic_Project(request,Pers):
+    if (request.method =="GET"):
+        return render(request,"Academic_Project.html",{})
+    else:
+        a1=academic_project()
+        
+        a1.project_name=request.POST['project_name']
+        a1.technologies_used=request.POST['technologies_used']
+        a1.description=request.POST['description']
+        a1.perIn_id=personal_info.objects.get(id=Pers)
+        
+        a1.save()
+        
+        return render(request,"fields.html",{"Pers":Pers})
+    
+def resume(request):
+    return render(request,"resume.html",{})

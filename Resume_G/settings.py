@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'Resume_G.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'Profiles.db',
+        'NAME': BASE_DIR / 'Profiles2.db',
     }
 }
 
