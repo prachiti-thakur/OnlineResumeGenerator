@@ -14,6 +14,6 @@ urlpatterns = [
     path('Certification/<Pers>',views.Certification),
     path('Technical_Skills/<Pers>',views.Technical_Skills),
     path('Academic_Project/<Pers>',views.Academic_Project),
-    path('resume',views.resume),
+    path('resume/<Pers>',views.resume),
     
 ]

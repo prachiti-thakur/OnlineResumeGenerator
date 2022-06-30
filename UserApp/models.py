@@ -11,7 +11,7 @@ class User_Info(models.Model):
         
 class personal_info(models.Model):
     fullname= models.CharField(max_length=20)
-    phone_number=models.IntegerField
+    phone_number=models.CharField(max_length=10)
     Gender=models.CharField(max_length=6)
     dob=models.DateField(auto_now=False,auto_now_add=False)
     emailid=models.EmailField(max_length=50)
@@ -34,11 +34,11 @@ class my_resumes(models.Model):
         db_table="my_resumes"
     
 class educational_details(models.Model):
-    nameOfExamination = models.CharField(max_length=50)
+    nameOfExamination= models.CharField(max_length=50)
     institute=models.CharField(max_length=500)
     university=models.CharField(max_length=100)
     percentage=models.CharField(max_length=10)
-    yearOfcompletion=models.IntegerField
+    yearOfcompletion=models.CharField(max_length=10)
     perIn_id = models.ForeignKey(personal_info,on_delete=models.CASCADE)
 
     class Meta:
@@ -63,10 +63,12 @@ class academic_project(models.Model):
     project_name= models.CharField(max_length=100)
     technologies_used=models.CharField(max_length=200)
     description=models.TextField(max_length=1000)
+    project_title= models.CharField(max_length=100)
     perIn_id= models.ForeignKey(personal_info,on_delete=models.CASCADE)
     
     class Meta:
         db_table="academic_project"
+        
     
 
     

@@ -147,5 +147,13 @@ def Academic_Project(request,Pers):
         
         return render(request,"fields.html",{"Pers":Pers})
     
-def resume(request):
-    return render(request,"resume.html",{})
+def resume(request,Pers):
+    
+    Pers=personal_info.objects.get(id=Pers)
+    Ed_d=educational_details.objects.filter(perIn_id=Pers)
+    certi=certification.objects.filter(perIn_id=Pers)
+    Tec_Skill=technical_skills.objects.filter(perIn_id=Pers)
+    acd_p=academic_project.objects.filter(perIn_id=Pers)
+    
+    
+    return render(request,"resume.html",{"Ed_d":Ed_d,"certi":certi,"Tec_Skill":Tec_Skill,"acd_p":acd_p,"Pers":Pers})
